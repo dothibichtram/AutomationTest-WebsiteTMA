@@ -30,9 +30,28 @@ public class HomeTest extends BaseSetup {
 		System.out.println("--------SEARCH----------");
 		homePage.enterSearchString("Test");
 		homePage.navigateBack();
+		homePage.navigateRefesh();
 		System.out.println(homePage.getHomePageTitle());
+		homePage.enterSearchString(" %% ");
+		homePage.navigateBack();
+		homePage.navigateRefesh();
+		homePage.enterSearchString("123");
+		homePage.navigateBack();
+		homePage.navigateRefesh();
+		homePage.enterSearchString(" ");
+		homePage.navigateBack();
+		homePage.navigateRefesh();
+		
+		
+		
 		homePage.enterSearchHeader("Test");
 		System.out.println(homePage.getHomePageTitle());
+		homePage.navigateBack();
+		homePage.navigateRefesh();
+		homePage.enterSearchHeader(" %% ");
+		homePage.navigateBack();
+		homePage.navigateRefesh();
+		homePage.enterSearchHeader("56");
 		homePage.navigateBack();
 		
 		System.out.println("--------HOT JOB----------");
@@ -155,7 +174,20 @@ public class HomeTest extends BaseSetup {
 		homePage.navigateBack();
 		homePage.clickLienHe();
 		System.out.println(homePage.getHomePageTitle());
+		homePage.clickSubmitLH();
 		homePage.navigateBack();
+		homePage.formLH("", "", "", "", "");
+		homePage.formLH("Nguyen Van A", "", "", "", "");
+		homePage.formLH("Nguyen Van A", "abc", "", "", "");
+		homePage.formLH("Nguyen Van A", "", "", "abc", "");
+		homePage.formLH("", "ab", "", "", "");
+		homePage.formLH("", "", "", "123", "");
+		homePage.formLH("", "", "", "123456789", "");
+		homePage.formLH("", "a@", "", "", "");
+		homePage.formLH("", "a@b", "", "", "");
+		
+//		homePage.navigateBack();
+		
 		
 	}
 

@@ -16,17 +16,6 @@ public class HomePage {
 
 	private WebDriver driver;
 
-	private By headerPageText = By.xpath("//a[normalize-space()='Forgot Username/Password?']");
-	private By emailInput = By.id("EmailInputEmail");
-	private By passwordInput = By.id("PasswordInputPassword");
-	private By signinBtn = By.id("SignInButton");
-	private By errorMsgText = By.id("signInError");
-
-	private By pinInput = By.id("Pin");
-	private By submitBtn = By.id("RequestPinForm_SubmitButton");
-	private By backBtn = By.id("RequestPinForm_Back");
-	private By resetPintBtn = By.id("RequestPinForm_ResetPin");
-
 	private By searchHeader = By.id("headerSearch");
 	private By searchString  = By.name("SearchString");
 	private By hotJobItem = By.xpath("//*[@id=\"layout-wrapper\"]/div/div[3]/div/div/div/article/div/div[1]/div/div[3]/a[1]");
@@ -77,6 +66,13 @@ public class HomePage {
 	private By nhipSong = By.xpath("//*[@id=\"layout-wrapper\"]/div/div[1]/div/article/nav/ul/li[5]/a");
 	private By hoiDap = By.xpath("//*[@id=\"layout-wrapper\"]/div/div[1]/div/article/nav/ul/li[6]/a");
 	private By lienHe = By.xpath("//*[@id=\"layout-wrapper\"]/div/div[1]/div/article/nav/ul/li[7]/a");
+	
+	private By name = By.id("FullName");
+	private By position = By.id("JobPosition");
+	private By email = By.id("Email");
+	private By phone = By.id("Phone");
+	private By content = By.id("Content");
+	private By submitLH = By.xpath("//*[@id=\"ApplyCV\"]/div[7]/div[2]/button");
 	// Khởi tạo class khi được gọi và truyền driver vào để các thành phần trong
 	// class này đọc
 	public HomePage(WebDriver driver) throws InterruptedException {
@@ -106,6 +102,11 @@ public class HomePage {
 		Thread.sleep(2000);
 		driver.navigate().back();
 	}
+	public void navigateRefesh() throws InterruptedException {
+		Thread.sleep(2000);
+		driver.navigate().refresh();
+	}
+	
 	
 	public void enterSearchString(String value) throws InterruptedException {
 		WebElement search = driver.findElement(searchString);
@@ -113,7 +114,6 @@ public class HomePage {
 			Thread.sleep(1000);
 			search.submit();
 	}
-	
 	
 	public void clickHotJobItem() {
 		WebElement item = driver.findElement(hotJobItem);
@@ -124,7 +124,6 @@ public class HomePage {
 		WebElement item = driver.findElement(hotJobMore);
 			item.click();
 	}
-	
 	
 	public void clickJobAdvLeft() {
 		WebElement item = driver.findElement(jobAdvLeft);
@@ -151,12 +150,11 @@ public class HomePage {
 		WebElement item = driver.findElement(whyTMAReadmore);
 			item.click();
 	}
-	
+
 	public void clickWhyTMASala() {
 		WebElement item = driver.findElement(whyTMASala);
 			item.click();
 	}
-	
 	public void clickWhyTMAEdu() {
 		WebElement item = driver.findElement(whyTMAEdu);
 			item.click();
@@ -165,27 +163,22 @@ public class HomePage {
 		WebElement item = driver.findElement(whyTMAAct);
 			item.click();
 	}
-	
 	public void clickLifeIn() {
 		WebElement item = driver.findElement(lifeIn);
 			item.click();
 	}
-	
 	public void clickMoveTop() {
 		WebElement item = driver.findElement(moveTop);
 			item.click();
 	}
-	
 	public void clickChatByMess() {
 		WebElement item = driver.findElement(chatByMess);
 			item.click();
 	}
-	
 	public void clickHrefJob() {
 		WebElement item = driver.findElement(hrefJob);
 			item.click();
 	}
-	
 	public void clickHrefLifeIn() {
 		WebElement item = driver.findElement(hrefLifeIn);
 			item.click();
@@ -292,68 +285,48 @@ public class HomePage {
 		WebElement item = driver.findElement(lienHe);
 			item.click();
 	}
-	// Sau khi thực hiện click Submit thì khởi tạo trang DashboardPage
-	public void signin(String username, String password, String Pin) throws Exception {
-		enterEmail(username);
-		enterPassword(password);
-		clickSignIn();
-		Thread.sleep(1000);
-		enterPin(Pin);
-		clickSubmit();
+	
+	public void enterName(String value) throws InterruptedException {
+		WebElement item = driver.findElement(name);
+			item.sendKeys(value);
+			Thread.sleep(500);
+	}
+	public void enterPosition(String value) throws InterruptedException {
+		WebElement item = driver.findElement(position);
+			item.sendKeys(value);
+			Thread.sleep(500);
+	}
+	public void enterEmail(String value) throws InterruptedException {
+		WebElement item = driver.findElement(email);
+			item.sendKeys(value);
+			Thread.sleep(500);
+	}
+	public void enterPhone(String value) throws InterruptedException {
+		WebElement item = driver.findElement(phone);
+			item.sendKeys(value);
+			Thread.sleep(500);
+	}
+	public void enterContent(String value) throws InterruptedException {
+		WebElement item = driver.findElement(content);
+			item.sendKeys(value);
+			Thread.sleep(500);
+	}
+	public void clickSubmitLH() {
+		WebElement item = driver.findElement(submitLH);
+			item.click();
+	}
+	public void formLH(String name, String email, String position, String phone, String content) throws Exception {
+		enterName(name);
+		enterPosition(position);
+		enterEmail(email);
+		enterPhone(phone);
+		enterContent(content);
+		clickSubmitLH();
+		Thread.sleep(500);
+		driver.navigate().to("https://www.tma.vn/Lien-he/");
 	}
 
-	public boolean verifySignIn() {
-		enterEmail("test");
-		enterPassword("pass");
-		clickSignIn();
-		return getErrorMessage().contains("incorrect");
-	}
 
-	public void enterEmail(String email) {
-		WebElement emailTxtBox = driver.findElement(emailInput);
-		if (emailTxtBox.isDisplayed())
-			emailTxtBox.sendKeys(email);
-	}
-
-	public void enterPassword(String password) {
-		WebElement passwordTxtBox = driver.findElement(passwordInput);
-		if (passwordTxtBox.isDisplayed())
-			passwordTxtBox.sendKeys(password);
-	}
-
-	public void clickSignIn() {
-		WebElement signin = driver.findElement(signinBtn);
-		if (signin.isDisplayed()) {
-			signin.click();
-		}
-	}
-
-	public void clickSubmit() {
-		WebElement submit = driver.findElement(submitBtn);
-		if (submit.isDisplayed()) {
-			submit.click();
-		}
-	}
-
-	public void enterPin(String PIN) {
-		driver.findElement(pinInput).sendKeys(PIN);
-	}
-
-	public void clickBack() {
-		driver.findElement(backBtn).click();
-	}
-
-	public void clickResetPin() {
-		driver.findElement(resetPintBtn).click();
-	}
-
-	public String getErrorMessage() {
-		String strErrorMsg = null;
-		WebElement errorMsg = driver.findElement(errorMsgText);
-		if (errorMsg.isDisplayed() && errorMsg.isEnabled())
-			strErrorMsg = errorMsg.getText();
-		return strErrorMsg;
-	}
 
 	@SuppressWarnings("unused")
 	public void waitForPageLoaded() {
